@@ -11,8 +11,8 @@
         public string AppInsightsResourceGroupName { get; set; }
         public string ResourceUrl => "https://management.core.windows.net";
         public string AuthorityUrl => $"https://login.microsoftonline.com/{TenantId}";
-        public string ReadTelemetryRolePath => $"/subscriptions/{SubscriptionId}/resourceGroups/{AppInsightsResourceGroupName}/providers/microsoft.insights/components/{AppInsightsResourceName}/api";
-        public string AuthenticateSdkRolePath => $"/subscriptions/{SubscriptionId}/resourceGroups/{AppInsightsResourceGroupName}/providers/microsoft.insights/components/{AppInsightsResourceName}/agentconfig";
-        public string WriteAnnotationsRolePath => $"/subscriptions/{SubscriptionId}/resourceGroups/{AppInsightsResourceGroupName}/providers/microsoft.insights/components/{AppInsightsResourceName}/annotations";
+        public string ReadTelemetryPermission => $"/subscriptions/{SubscriptionId}/resourceGroups/{AppInsightsResourceGroupName}/providers/microsoft.insights/components/{AppInsightsResourceName}/api";
+        public string AuthenticateSdkPermission => $"/subscriptions/{SubscriptionId}/resourceGroups/{AppInsightsResourceGroupName}/providers/microsoft.insights/components/{AppInsightsResourceName}/agentconfig";
+        public string WriteAnnotationsPermission => $"/subscriptions/{SubscriptionId}/resourceGroups/{AppInsightsResourceGroupName}/providers/microsoft.insights/components/{AppInsightsResourceName}/annotations";
     }
 }

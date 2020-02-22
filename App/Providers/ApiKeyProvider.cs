@@ -31,12 +31,12 @@ namespace App.Providers
                 Name = settings.AppInsightsApiKeyName,
                 LinkedReadProperties = new List<string>
                 {
-                    settings.ReadTelemetryRolePath,
-                    settings.AuthenticateSdkRolePath
+                    settings.ReadTelemetryPermission,
+                    settings.AuthenticateSdkPermission
                 },
                 LinkedWriteProperties = new List<string>
                 {
-                    settings.WriteAnnotationsRolePath
+                    settings.WriteAnnotationsPermission
                 }
             };
 
