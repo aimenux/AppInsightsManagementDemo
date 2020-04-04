@@ -5,6 +5,7 @@
 Using appinsights management library to manage api keys
 ```
 
-In this demo, i m creating an api key with permissions (read/write) in order to allow access to an appinsights using rest calls
+In order to allow access to an appinsights using rest calls, you need to create api keys via portal, azure cli, etc.
+In this demo, i m using azure management library for creating (then deleting) an api key with permissions (read/write).
 
 **`Tools`** : vs19, net core 3.1

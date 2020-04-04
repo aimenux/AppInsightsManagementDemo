@@ -22,8 +22,8 @@ namespace App
                 .Build();
 
             var services = new ServiceCollection();
-            services.Configure<Settings>(configuration.GetSection(nameof(Settings)));
             services.AddSingleton<IApiKeyProvider, ApiKeyProvider>();
+            services.Configure<Settings>(configuration.GetSection(nameof(Settings)));
 
             var serviceProvider = services.BuildServiceProvider();
 
