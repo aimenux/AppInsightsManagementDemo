@@ -1,10 +1,12 @@
 ﻿using System;
-using Microsoft.Azure.Management.ApplicationInsights.Management.Models;
+using App.Models;
 
 namespace App.Providers
 {
     public interface IApiKeyProvider : IDisposable
     {
-        ApplicationInsightsComponentAPIKey Create();
+        ApiKey Create();
+        bool Delete(ApiKey apiKey);
+        bool Delete(string apiKeyId);
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using App.Models;
 using Microsoft.Azure.Management.ApplicationInsights.Management;
 using Microsoft.Azure.Management.ApplicationInsights.Management.Models;
 using Microsoft.Extensions.Options;
@@ -22,7 +24,7 @@ namespace App.Providers
             };
         }
 
-        public ApplicationInsightsComponentAPIKey Create()
+        public ApiKey Create()
         {
             var settings = _options.Value;
 
@@ -40,10 +42,39 @@ namespace App.Providers
                 }
             };
 
-            return _applicationInsightsManagementClient.APIKeys.Create(
-                settings.AppInsightsResourceGroupName,
-                settings.AppInsightsResourceName, 
-                aPiKeyRequest);
+            try
+            {
+                var apiKey = _applicationInsightsManagementClient.APIKeys.Create(
+                    settings.AppInsightsResourceGroupName,
+                    settings.AppInsightsResourceName,
+                    aPiKeyRequest);
+                return new ApiKey(apiKey);
+            }
+            catch (Exception ex)
+            {
+                ConsoleColor.Red.WriteLine(ex);
+                return null;
+            }
+        }
+
+        public bool Delete(ApiKey apiKey) => Delete(apiKey.Id);
+
+        public bool Delete(string apiKeyId)
+        {
+            try
+            {
+                var settings = _options.Value;
+                _applicationInsightsManagementClient.APIKeys.Delete(
+                    settings.AppInsightsResourceGroupName,
+                    settings.AppInsightsResourceName,
+                    apiKeyId);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ConsoleColor.Red.WriteLine(ex);
+                return false;
+            }
         }
 
         public void Dispose()

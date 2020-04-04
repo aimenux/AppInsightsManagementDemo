@@ -8,9 +8,11 @@ namespace App
 {
     public static class Program
     {
-        public static void Main()
+        private const string DefaultEnvironmentToUse = "DEV";
+        
+        public static void Main(string[] args)
         {
-            var environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
+            var environment = Environment.GetEnvironmentVariable("ENVIRONMENT") ?? DefaultEnvironmentToUse;
 
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -27,15 +29,27 @@ namespace App
 
             using (var apiKeyProvider = serviceProvider.GetRequiredService<IApiKeyProvider>())
             {
-                var apiKeyCreated = apiKeyProvider.Create();
+                var apiKey = apiKeyProvider.Create();
 
-                Console.WriteLine($"ApiKey Id: {apiKeyCreated.Id}");
-                Console.WriteLine($"ApiKey Name: {apiKeyCreated.Name}");
-                Console.WriteLine($"ApiKey CreatedDate: {apiKeyCreated.CreatedDate}");
+                var isCreatedMessage = apiKey != null
+                    ? $"ApiKey '{apiKey.Name}' is created"
+                    : "ApiKey is not created";
+
+                Console.WriteLine(isCreatedMessage);
+
+                if (apiKey != null)
+                {
+                    ConsoleColor.Yellow.PressAnyKeyToContinue();
+
+                    var isDeletedMessage = apiKeyProvider.Delete(apiKey)
+                        ? $"ApiKey '{apiKey.Name}' is deleted"
+                        : $"ApiKey '{apiKey.Name}' is not deleted";
+
+                    Console.WriteLine(isDeletedMessage);
+                }
             }
 
-            Console.WriteLine("Press any key to exit !");
-            Console.ReadKey();
+            ConsoleColor.Yellow.PressAnyKeyToExit();
         }
     }
 }
